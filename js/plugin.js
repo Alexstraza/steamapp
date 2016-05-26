@@ -5,3 +5,8 @@ window.addEventListener('load', function(){
    var so = cordova.plugins.screenorientation;
    so.setOrientation(so.Orientation.LANDSCAPE);
 });
+
+document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+   StatusBar.hide
+}

@@ -1,0 +1,39 @@
+.welcome_txt{
+    height: 100px;
+    width: 100%;
+    /*background-color: blue;*/
+    text-align: center;
+}
+
+body{
+    background-color: #1b2838;
+}
+
+#footer{
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.stadard_button_size{
+    display: inline-block;
+    width: 170px;
+    height: 200px;
+}
+
+.stadard_button_size img{
+    width: 170px;
+    height: 200px;
+}
+
+
+#button1{
+    background-color: blue;
+}
+#button2{
+    background-color: red;
+}
+#button3{
+    background-color: yellow;
+}
+#button4{
+    background-color: green;
+}
