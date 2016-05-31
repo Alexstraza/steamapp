@@ -10,3 +10,9 @@ document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
    StatusBar.hide
 }
+
+document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+   window.open = cordova.InAppBrowser.open;
+}
+

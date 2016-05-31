@@ -76,3 +76,28 @@ var server = app.listen(30000, function () {
   console.log('Example app listening at http://%s:%s',
     server.address().address, server.address().port);
 });
+
+//sql test
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : '',
+    database : 'steam'
+});
+
+connection.connect();
+
+connection.query('SELECT * from customers', function(err, rows, fields) {
+    if (!err)
+        console.log('The solution is: ', rows);
+    else
+        console.log('Error while performing Query.');
+});
+
+var post  = {id: 99};
+var query = connection.query('INSERT INTO customers SET ?', post, function(err, result) {
+  //console.log('Neat!');
+});
+//console.log(query)
+
