@@ -6,6 +6,9 @@ var SteamStrategy = require('passport-steam').Strategy;
 var session = require('express-session');
 
 
+var data;
+
+
 
 passport.serializeUser(function(user,done){
 	done(null, user);
@@ -60,11 +63,16 @@ app.get('/', function (req, res) {
   if (req.isAuthenticated()) {
     html += "<p>authenticated as user:</p>"
     html += "<pre>" + JSON.stringify(req.user, null, 4) + "</pre>";
+      //console.log(req.user._json.steamid);
+
   }
+    data = req;
+    some = data.user;
+    console.log(user);
+
 
   res.send(html);
 });
-
 app.get('/logout', function(req, res){
   console.log('logging out');
   req.logout();
@@ -78,6 +86,7 @@ var server = app.listen(30000, function () {
 });
 
 //sql test
+
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
     host     : 'localhost',
@@ -95,9 +104,11 @@ connection.query('SELECT * from customers', function(err, rows, fields) {
         console.log('Error while performing Query.');
 });
 
-var post  = {id: 99};
-var query = connection.query('INSERT INTO customers SET ?', post, function(err, result) {
-  //console.log('Neat!');
-});
-//console.log(query)
 
+
+//var post  = {id: 99};
+//var query = connection.query('INSERT INTO customers SET ?', post, function(err, result) {
+//  //console.log('Neat!');
+//});
+////console.log(query)
+//
