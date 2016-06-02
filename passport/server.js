@@ -7,6 +7,7 @@ var session = require('express-session');
 
 
 var data;
+var userName;
 
 
 
@@ -65,14 +66,50 @@ app.get('/', function (req, res) {
     html += "<pre>" + JSON.stringify(req.user, null, 4) + "</pre>";
       //console.log(req.user._json.steamid);
 
+    //set variable for push
+      data = req;
+      userName = data.user._json.personaname;
+      steamId = data.user._json.steamid;
+
+      //sql test
+      var mysql      = require('mysql');
+      var connection = mysql.createConnection({
+          host     : 'localhost',
+          user     : 'root',
+          password : '',
+          database : 'steam'
+      });
+
+      connection.connect();
+
+      //connection.query('SELECT * FROM customers', function(err, rows, fields) {
+      //    if (!err)
+      //        console.log('The solution is: ', rows);
+      //
+      //    else
+      //        console.log('Error while performing Query.');
+      //    console.log(err);
+      //});
+
+
+
+        //var post  = {id: 99};
+        //var query = connection.query('INSERT INTO customers SET ?', post, function(err, result) {
+        //  //console.log('Neat!');
+        //});
+
+          var query = connection.query('INSERT INTO customers (id, name) VALUES ("' + steamId + '", "' + userName + '")',
+              function selectCb(err, results, fields) {
+
+
+              });
+
   }
-    data = req;
-    some = data.user;
-    console.log(user);
-
-
   res.send(html);
 });
+
+
+
 app.get('/logout', function(req, res){
   console.log('logging out');
   req.logout();
@@ -80,35 +117,8 @@ app.get('/logout', function(req, res){
 });
 
 
+
 var server = app.listen(30000, function () {
   console.log('Example app listening at http://%s:%s',
     server.address().address, server.address().port);
 });
-
-//sql test
-
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'steam'
-});
-
-connection.connect();
-
-connection.query('SELECT * from customers', function(err, rows, fields) {
-    if (!err)
-        console.log('The solution is: ', rows);
-    else
-        console.log('Error while performing Query.');
-});
-
-
-
-//var post  = {id: 99};
-//var query = connection.query('INSERT INTO customers SET ?', post, function(err, result) {
-//  //console.log('Neat!');
-//});
-////console.log(query)
-//
