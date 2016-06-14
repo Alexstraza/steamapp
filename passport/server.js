@@ -6,8 +6,17 @@ var SteamStrategy = require('passport-steam').Strategy;
 var session = require('express-session');
 
 
+
 var data;
 var userName;
+
+app.set("view engine","jade")
+
+app.get('/', function (req, res) {
+
+    res.render('result');
+
+});
 
 
 
@@ -80,16 +89,29 @@ app.get('/', function (req, res) {
           database : 'steam'
       });
 
-      connection.connect();
 
-      //connection.query('SELECT * FROM customers', function(err, rows, fields) {
-      //    if (!err)
-      //        console.log('The solution is: ', rows);
-      //
-      //    else
-      //        console.log('Error while performing Query.');
-      //    console.log(err);
-      //});
+      connection.query('SELECT * FROM customers', function(err, rows, fields) {
+               if (!err)
+              console.log(rows);
+          else
+              console.log('Error while performing Query.');
+          console.log(err);
+      });
+
+      app.get('/', function (req, res) {
+
+        connection.query('SELECT * FROM customers', function(err, rows, fields) {
+            
+            if (err) 
+                console.log(err)
+            else
+                document.getElementById("username_data").innerHTML = rows;
+            
+        });
+    });
+
+     
+
 
 
 
@@ -105,8 +127,12 @@ app.get('/', function (req, res) {
               });
 
   }
+
+
   res.send(html);
 });
+
+
 
 
 
@@ -116,9 +142,11 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
+ 
 
 
 var server = app.listen(30000, function () {
   console.log('Example app listening at http://%s:%s',
     server.address().address, server.address().port);
 });
+
