@@ -128,7 +128,7 @@ s.getOwnedGames({
         var totalGames = (data.response.game_count);
         var result = Math.floor((Math.random() * totalGames  ));
         var randomGame = (data.response.games[result]);
-        console.log(randomGame);
+        console.log(randomGame.appid);
     }
 })
 
