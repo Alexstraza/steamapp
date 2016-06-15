@@ -1,10 +1,32 @@
+<html>
+<head>
+	<% include header %>
+</head>
+
+
+<body>
+	<style>
+	body {
+		background-color: #757575;
+	}
+	</style>
+
+
+	<div class="container">
+
 <% if (!user) { %>
-	<h2>Welcome! Please log in.</h2>
-	<p><a href="auth/steam">Sign On with Steam</a></p>
+	<div class="col s6"><h2>Welcome to Sauna.</h2></div>
+	<a class="waves-effect waves-light btn" href="auth/steam">Sign On with Steam</a>
+
 <% } else { %>
-	<h2>Hello, <%= user.displayName %>. - <a href='logout'>Logout</a></h2>
+
+	<div class="col s12"><h2>Hello, <%= user.displayName %>.</h2><br></div>
+
+	<a class="waves-effect waves-light btn" href='logout'>Logout</a>
+	<a class="waves-effect waves-light btn" href="account">See Account Information</a>
+
 <% } %>
 
-<!-- Should redirect to homepage if you're not logged in -->
-<p><a href="account">See Account Information</a></p>
+	</div>
+</body>
 
