@@ -2,7 +2,8 @@ var express = require('express')
   , passport = require('passport')
   , util = require('util')
   , session = require('express-session')
-  , SteamStrategy = require('passport-steam').Strategy;
+  , SteamStrategy = require('passport-steam').Strategy
+  , steam = require('steam-web');
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -19,6 +20,11 @@ passport.use(new SteamStrategy({
   },
   function(identifier, profile, done) {
     process.nextTick(function () {
+    idsteamo = profile.id;
+      // To keep the example simple, the user's Steam profile is returned to
+      // represent the logged-in user.  In a typical application, you would want
+      // to associate the Steam account with a user record in your database,
+      // and return that user instead.
       profile.identifier = identifier;
       return done(null, profile);
     });
@@ -45,9 +51,14 @@ app.get('/', function(req, res){
   res.render('index', { user: req.user });
 });
 
+app.get('/randomizegame', ensureAuthenticated, function(req, res){
+  res.render('randomizegame', { user: req.user });
+});
+
 app.get('/account', ensureAuthenticated, function(req, res){
   res.render('account', { user: req.user });
 });
+
 
 app.get('/logout', function(req, res){
   req.logout();
@@ -74,10 +85,37 @@ function ensureAuthenticated(req, res, next) {
 }
 
 var server = app.listen(20000, function () {
-  console.log('Example app listening at http://%s:%s',
+  console.log('Sauna is running at at http://localhost',
     server.address().address, server.address().port);
 });
 
 
+
+var s = new steam({
+    apiKey: '8E9048FACE6C8ACD3714439FB9602D25',
+    format: 'json' //optional ['json', 'xml', 'vdf'],
+
+});
+
+
+s.getOwnedGames({
+    steamid: '76561198058444302',
+    callback: function(err,data) {
+        var totalGames = (data.response.game_count);
+        var result = Math.floor((Math.random() * totalGames  ));
+        var randomGame = (data.response.games[result]);
+        console.log(randomGame.appid);
+    }
+})
+
+//76561198058444302
+//s.getFriendList({
+//    steamid: '76561198058444302',
+//    relationship: 'all', //'all' or 'friend'
+//    callback: function (err, data) {
+//        console.log(data);
+//        console.log(JSON.stringify(data))
+//    },
+//})
 
 
