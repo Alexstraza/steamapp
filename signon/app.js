@@ -19,6 +19,7 @@ passport.use(new SteamStrategy({
     apiKey: '8E9048FACE6C8ACD3714439FB9602D25'
   },
   function(identifier, profile, done) {
+
     process.nextTick(function () {
     idsteamo = profile.id;
       // To keep the example simple, the user's Steam profile is returned to
@@ -26,10 +27,17 @@ passport.use(new SteamStrategy({
       // to associate the Steam account with a user record in your database,
       // and return that user instead.
       profile.identifier = identifier;
+            // asynchronous verification, for effect...
+            process.nextTick(function () {
+                // To keep the example simple, the user's Steam profile is returned to
+                // represent the logged-in user.  In a typical application, you would want
+                // to associate the Steam account with a user record in your database,
+                // and return that user instead.
+                profile.identifier = identifier;
       return done(null, profile);
     });
-  }
-));
+  });
+}));
 
 var app = express();
 
@@ -48,11 +56,23 @@ app.use(passport.session());
 app.use(express.static(__dirname + '/../../public'));
 
 app.get('/', function(req, res){
-  res.render('index', { user: req.user });
+    res.render('index', { user: req.user });
+
+    var steamId = (req.user._json.steamid);
+    s.getOwnedGames({
+        steamid: steamId,
+        callback: function(err,data) {
+            var totalGames = (data.response.game_count);
+            var result = Math.floor((Math.random() * totalGames  ));
+            var randomNumer = (data.response.games[result]);
+            var randomGame = randomNumer.appid;
+            console.log(randomGame);
+        }
+    })
 });
 
-app.get('/randomizegame', ensureAuthenticated, function(req, res){
-  res.render('randomizegame', { user: req.user });
+app.get('/randomizegame', ensureAuthenticated, function(req, res, data){
+  res.render('randomizegame', { data: req.data });
 });
 
 app.get('/account', ensureAuthenticated, function(req, res){
@@ -98,15 +118,15 @@ var s = new steam({
 });
 
 
-s.getOwnedGames({
-    steamid: '76561198058444302',
-    callback: function(err,data) {
-        var totalGames = (data.response.game_count);
-        var result = Math.floor((Math.random() * totalGames  ));
-        var randomGame = (data.response.games[result]);
-        console.log(randomGame.appid);
-    }
-})
+//s.getOwnedGames({
+//    steamid: '76561198058444302',
+//    callback: function(err,data) {
+//        var totalGames = (data.response.game_count);
+//        var result = Math.floor((Math.random() * totalGames  ));
+//        var randomGame = (data.response.games[result]);
+//        console.log(randomGame.appid);
+//    }
+//})
 
 //76561198058444302
 //s.getFriendList({
