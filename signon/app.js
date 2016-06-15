@@ -2,7 +2,8 @@ var express = require('express')
   , passport = require('passport')
   , util = require('util')
   , session = require('express-session')
-  , SteamStrategy = require('passport-steam').Strategy;
+  , SteamStrategy = require('passport-steam').Strategy
+  , steam = require('steam-web');
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -31,7 +32,7 @@ passport.use(new SteamStrategy({
   function(identifier, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
-
+    idsteamo = profile.id;
       // To keep the example simple, the user's Steam profile is returned to
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Steam account with a user record in your database,
@@ -104,6 +105,7 @@ app.get('/auth/steam/return',
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/');
+
 }
 
 var server = app.listen(20000, function () {
@@ -112,5 +114,32 @@ var server = app.listen(20000, function () {
 });
 
 
+
+var s = new steam({
+    apiKey: '8E9048FACE6C8ACD3714439FB9602D25',
+    format: 'json' //optional ['json', 'xml', 'vdf'],
+
+});
+
+
+s.getOwnedGames({
+    steamid: '76561198058444302',
+    callback: function(err,data) {
+        var totalGames = (data.response.game_count);
+        var result = Math.floor((Math.random() * totalGames  ));
+        var randomGame = (data.response.games[result]);
+        console.log(randomGame);
+    }
+})
+
+//76561198058444302
+//s.getFriendList({
+//    steamid: '76561198058444302',
+//    relationship: 'all', //'all' or 'friend'
+//    callback: function (err, data) {
+//        console.log(data);
+//        console.log(JSON.stringify(data))
+//    },
+//})
 
 
