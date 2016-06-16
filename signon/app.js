@@ -83,7 +83,7 @@ app.get('/randomizegame', ensureAuthenticated, function(req, res) {
     res.render('randomizegame', {
         generateGame: generatedGame
     });
-    console.log(generatedGame);
+    //console.log(generatedGame);
 
 
 
@@ -123,7 +123,7 @@ function ensureAuthenticated(req, res, next) {
         return next();
     }
     res.redirect('/');
-    console.log(req);
+    //console.log(req);
 }
 
 var server = app.listen(20000, function() {
