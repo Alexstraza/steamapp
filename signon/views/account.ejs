@@ -8,18 +8,22 @@
 
 <style>
 	body {
-		background-color: #757575;
+		background-color: #1C222D;
 	}
 	</style>
+
+	<% include navbar %><br>
 
 	<div class="container">
 
 	<img src='<%= user.photos[2].value %>' alt='Your Avatar Image' /></p>
-	<p>ID: <%= user.id %></p>
-	<p>Name: <%= user.displayName %></p>
+	<p class="white-text">ID: <%= user.id %></p>
+	<p class="white-text">Name: <%= user.displayName %></p>
 
-	<a class="waves-effect waves-light btn" href="..">Go Back</a>
+	<a class="waves-effect waves-light btn blue-grey darken-4" href="..">Go Back</a>
 
 	</div>
+
+	<% include footer %>
 </body>	
 

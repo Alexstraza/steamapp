@@ -5,18 +5,26 @@
 
 
 <body>
+
+	<% include navbar %>
 	<div class="container">
 
 <style>
 	body {
-		background-color: #757575;
+		background-color: #1C222D;
 	}
 	</style>
 
-	<h2>You should play:</h2>
+
+
+	<h2 class="white-text">You should play:</h2>
 
 	<iframe src="http://store.steampowered.com/widget/<%= generateGame %>/" frameborder="0" width="646" height="190"></iframe><br> 
 
-	<a class="waves-effect waves-light btn" href="randomizegame">Reroll</a>
-	<a class="waves-effect waves-light btn" href="..">Go Back</a>
-	</div> 
+	<p class="white-text"> These recommendations are based on your games library. Steam returns a Steam Store link, but you already own these games.</p>
+
+	<a class="waves-effect waves-light btn  blue-grey darken-4" href="randomizegame"><i class="material-icons right">shuffle</i>Reroll</a>
+	<a class="waves-effect waves-light btn  blue-grey darken-4" href="..">Go Back</a>
+	</div>
+
+	<% include footer %> 

@@ -7,27 +7,34 @@
 <body>
 	<style>
 	body {
-		background-color: #757575;
+		background-color: #1C222D;
 	}
 	</style>
-
+	
+	<% include navbar %> 
 
 	<div class="container">
 
 <% if (!user) { %>
-	<div class="col s6"><h2>Welcome to Sauna.</h2></div>
-	<a class="waves-effect waves-light btn" href="auth/steam">Sign On with Steam</a>
+	<div class="col s7"><h2 class="white-text">Welcome to Sauna.</h2></div>
+	<h5 class="white-text">Ever get tired of not knowing what games to play? Never fear, for Sauna can help. By logging into Sauna, we can view your Steam Library and give you a random game to play! Never get bored anymore, with Sauna. </h5>
+	<p class="white-text">Please log in with your Steam account to use Sauna. We will only have your basic Steam profile information (game library, SteamID, avatar),<br> your password is safely stored with Steam.</p>
+	<a class="waves-effect waves-light btn light-green darken-2" href="auth/steam"><i class="material-icons right">vpn_key</i>Sign On with Steam</a>
 
 <% } else { %>
 
-	<div class="col s12"><h2>Hello, <%= user.displayName %>.</h2><br></div>
+	<div class="col s12"><h2 class="white-text">Hello, <%= user.displayName %>.</h2></div>
+	<p class="white-text"> You can randomize a game to play from your library by pressing the "Randomize Game" option.<br>
+		To view your Steam ID, Avatar and Account name, please press the "See Account Information" button. </p>     
 
-	<a class="waves-effect waves-light btn" href='logout'>Logout</a>
-	<a class="waves-effect waves-light btn" href="randomizegame">Randomize Game</a>
-	<a class="waves-effect waves-light btn" href="account">See Account Information</a>
+	<a class="waves-effect waves-light btn  blue-grey darken-4" href='logout'>Logout</a>
+	<a class="waves-effect waves-light btn  blue-grey darken-4" href="randomizegame"><i class="material-icons right">shuffle</i>Randomize Game</a>
+	<a class="waves-effect waves-light btn  blue-grey darken-4" href="account"><i class="material-icons right">perm_identity</i>See Account Information</a>
 
 <% } %>
 
+	
+	<% include footer %>
 	</div>
 </body>
 
